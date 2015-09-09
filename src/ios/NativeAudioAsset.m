@@ -46,12 +46,16 @@ static const CGFloat FADE_DELAY = 0.08;
 
 - (void) play
 {
+    int tempIndex = 
     AVAudioPlayer * player = [voices objectAtIndex:playIndex];
     [player setCurrentTime:0.0];
     player.numberOfLoops = 0;
     [player play];
     playIndex += 1;
-    playIndex = playIndex % [voices count];
+    if (playIndex >= [voices count]) {
+        playIndex = 0;
+    }
+    //playIndex = playIndex % [voices count];
 }
 
 
@@ -68,7 +72,10 @@ static const CGFloat FADE_DELAY = 0.08;
         player.volume = 0;
         [player play];
         playIndex += 1;
-        playIndex = playIndex % [voices count];
+        if (playIndex >= [voices count]) {
+            playIndex = 0;
+        }
+        //playIndex = playIndex % [voices count];
         [self performSelector:@selector(playWithFade) withObject:nil afterDelay:fadeDelay.floatValue];
     }
     else
@@ -122,7 +129,10 @@ static const CGFloat FADE_DELAY = 0.08;
     player.numberOfLoops = -1;
     [player play];
     playIndex += 1;
-    playIndex = playIndex % [voices count];
+    if (playIndex >= [voices count]) {
+        playIndex = 0;
+    }
+    //playIndex = playIndex % [voices count];
 }
 
 - (void) unload 
